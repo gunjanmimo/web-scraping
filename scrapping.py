@@ -2,7 +2,8 @@ from bs4 import BeautifulSoup as soup  # HTML data structure
 from urllib.request import urlopen as uReq  # Web client
 # html file writing function
 def htmlWrite(a):
-    f= open("test.html","w")
+    f= open("test.html","a")
+    #print("writing Data...")
     f.write(str(a))
     f.close()
 
@@ -21,9 +22,15 @@ uClient.close()
 # finds each product from the store page
 containers = page_soup.findAll("div", {"class": "item-container"})
 
-print("total containers:",len(containers))
-container = containers[1]
-print("writing HTML...")
-htmlWrite(container.div)
+# print("total containers:",len(containers))
+# container = containers[0]
+# print("writing HTML...")
+# htmlWrite(container)
 
-
+price=page_soup.findAll("li",{"class":"price-current"})
+print(len(price))
+print(len(containers))
+print("saving Data...")
+for container in containers:
+    
+    htmlWrite(container.a.img['title']+"\n")
