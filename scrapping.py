@@ -7,6 +7,12 @@ def htmlWrite(a):
     f.write(str(a))
     f.close()
 
+# ! csv file strore
+fileName = "product.csv"
+f= open(fileName,"w")
+headers="title, price\n"
+f.write(headers)
+
 # URl to web scrap from.
 # in this example we web scrap graphics cards from Newegg.com
 page_url = "http://www.newegg.com/Product/ProductList.aspx?Submit=ENE&N=-1&IsNodeId=1&Description=GTX&bop=And&Page=1&PageSize=36&order=BESTMATCH"
@@ -27,10 +33,23 @@ containers = page_soup.findAll("div", {"class": "item-container"})
 # print("writing HTML...")
 # htmlWrite(container)
 
+
+
+#finding price of the products
 price=page_soup.findAll("li",{"class":"price-current"})
-print(len(price))
-print(len(containers))
-print("saving Data...")
+# print(len(price))
+# print(len(containers))
+# print("saving Data...")
+# htmlWrite(price[0].strong.text+" $")
+
+i=0
 for container in containers:
-    
-    htmlWrite(container.a.img['title']+"\n")
+    for p in price:
+        title=container.a.img['title']
+        productPrice=p.strong.text
+        # htmlWrite("product:{}".format(i)+"\n"+container.a.img['title']+"\n"+"price: "+p.strong.text+" $\n\n")
+        # i=i+1
+        f.write(title+","+productPrice+"\n")
+
+
+f.close()
